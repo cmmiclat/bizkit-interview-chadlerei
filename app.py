@@ -91,7 +91,7 @@ def dates_overlap(start_a, end_a, start_b, end_b):
     if (end_a > start_b and end_a < end_b):
         return True
 
-    # If Start date is before an existing one starts, its end date must be before the existing one starts.
+    # If Start date is before an existing one starts, its end date must be on or before the existing one starts.
     if (start_a < start_b and end_a > start_b):
         return True
 
@@ -173,6 +173,10 @@ def create_booking():
     data = request.get_json(force=True)
 
     equipment = get_equipment(data.get("equipment_id"))
+    # Customer name should be required
+    customer = data.get("customer")
+    if customer is None or customer == '':
+        return jsonify({"error": "Customer Name is required."}), 400
     if equipment is None:
         return jsonify({"error": "Unknown equipment"}), 400
     if equipment["status"] == "maintenance":

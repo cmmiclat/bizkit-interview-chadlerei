@@ -71,7 +71,8 @@
   <select id="equipment"></select>
 
   <label for="customer">Customer name</label>
-  <input id="customer" type="text" placeholder="e.g. Jane Doe" />
+  <!-- Ideally, Name should be required -->
+  <input id="customer" type="text" placeholder="e.g. Jane Doe" required />
 
   <label for="from">Start date</label>
   <input id="from" type="date" />
@@ -80,6 +81,8 @@
   <input id="to" type="date" />
 
   <div class="total" id="total">Total: PHP 0.00</div>
+
+  <p><em>10% Discount on bookings 7 or more days!</em></p>
 
   <button id="book">Create booking</button>
 
@@ -131,12 +134,14 @@
         totalEl.textContent = "Total: PHP 0.00";
         return;
       }
-      let discount = 1;
-      if (days >= 1) {
-        discount = 0.9;
+      let discountMultiplier = 1;
+      let discountText = '';
+      if (days >= 7) {
+        discountMultiplier = 0.9;
+        discountText = ' (Discount Applied!)'
       }
-      const total = equipment.daily_rate * days * discount;
-      totalEl.textContent = `Total: PHP ${total.toFixed(2)} (${days} day${days > 1 ? "s" : ""})`;
+      const total = equipment.daily_rate * days * discountMultiplier;
+      totalEl.textContent = `Total: PHP ${total.toFixed(2)} (${days} day${days > 1 ? "s" : ""})${discountText}`;
     }
 
     async function createBooking() {
@@ -169,6 +174,8 @@
 
     document.getElementById("equipment").addEventListener("change", updateTotal);
     document.getElementById("from").addEventListener("change", updateTotal);
+    // I added the "to" updateTotal
+    document.getElementById("to").addEventListener("change", updateTotal);
     document.getElementById("book").addEventListener("click", createBooking);
 
     loadEquipment();
