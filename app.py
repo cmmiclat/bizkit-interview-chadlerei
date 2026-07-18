@@ -124,7 +124,8 @@ def calculate_total(daily_rate, days):
     TODO (Task 2): implement.
     """
 
-    # 10% discount on 7 days or higher
+    # 10% discount on 7 days or highers
+    # Commit message for task 2
     if days >= 7:
         return (daily_rate*days)*0.9
     else:
