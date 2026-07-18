@@ -69,6 +69,10 @@ def rental_days(from_date, to_date):
 
     TODO (Task 1): implement.
     """
+
+    # +1 date because same start/end date equals 0.
+    return (to_date - from_date).days + 1
+
     raise NotImplementedError
 
 
@@ -78,6 +82,21 @@ def dates_overlap(start_a, end_a, start_b, end_b):
 
     TODO (Task 1): implement.
     """
+
+    # Start date must not be within the start and end date of an existing one, except for the same ending date
+    if (start_a >= start_b and start_a < end_b):
+        return True
+
+    # End date must not be within the start and end date of an existing one. It may end the same date an existing one starts.
+    if (end_a > start_b and end_a < end_b):
+        return True
+
+    # If Start date is before an existing one starts, its end date must be before the existing one starts.
+    if (start_a < start_b and end_a > start_b):
+        return True
+
+    return False
+
     raise NotImplementedError
 
 
@@ -87,6 +106,14 @@ def find_conflicting_booking(equipment_id, from_date, to_date, bookings):
 
     TODO (Task 1): implement.
     """
+
+    for booking in bookings:
+        if booking['status'] != 'cancelled' and equipment_id == booking['equipment_id']:
+            if (dates_overlap(from_date, to_date, parse_date(booking['from_date']), parse_date(booking['to_date']))):
+                return booking
+    
+    return None
+
     raise NotImplementedError
 
 
@@ -96,6 +123,14 @@ def calculate_total(daily_rate, days):
 
     TODO (Task 2): implement.
     """
+
+    # 10% discount on 7 days or higher
+    if days >= 7:
+        return (daily_rate*days)*0.9
+    else:
+        return daily_rate*days
+
+
     raise NotImplementedError
 
 

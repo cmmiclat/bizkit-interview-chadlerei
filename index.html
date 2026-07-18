@@ -1,21 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Equipment Rental</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; }
-    h1 { font-size: 1.4rem; }
-    label { display: block; margin: 12px 0 4px; font-weight: 600; font-size: 0.9rem; }
-    select, input { width: 100%; padding: 8px; font-size: 1rem; box-sizing: border-box; }
-    button { margin-top: 16px; padding: 10px 16px; font-size: 1rem; cursor: pointer; }
-    .total { margin-top: 16px; font-size: 1.2rem; font-weight: 700; }
-    .message { margin-top: 16px; padding: 10px; border-radius: 6px; }
-    .ok { background: #e6f4ea; color: #1e7e34; }
-    .err { background: #fdecea; color: #c0392b; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 16px;
+      color: #1a1a1a;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 10px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .total {
+      margin-top: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .message {
+      margin-top: 16px;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .ok {
+      background: #e6f4ea;
+      color: #1e7e34;
+    }
+
+    .err {
+      background: #fdecea;
+      color: #c0392b;
+    }
   </style>
 </head>
+
 <body>
   <h1>Book Equipment</h1>
 
@@ -79,7 +127,11 @@
         totalEl.textContent = "Total: PHP 0.00";
         return;
       }
-      const total = equipment.daily_rate * days;
+      let discount = 1;
+      if (days >= 1) {
+        discount = 0.9;
+      }
+      const total = equipment.daily_rate * days * discount;
       totalEl.textContent = `Total: PHP ${total.toFixed(2)} (${days} day${days > 1 ? "s" : ""})`;
     }
 
@@ -118,4 +170,5 @@
     loadEquipment();
   </script>
 </body>
+
 </html>
